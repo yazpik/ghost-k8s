@@ -12,8 +12,7 @@ RUN set -x \
 	&& gpg --batch --verify /usr/local/bin/gosu.asc /usr/local/bin/gosu \
 	&& rm -r "$GNUPGHOME" /usr/local/bin/gosu.asc \
 	&& chmod +x /usr/local/bin/gosu \
-	&& gosu nobody true \
-  && mkdir -p /ghost/content
+	&& gosu nobody true 
 
 ENV NODE_ENV production
 
