@@ -41,8 +41,8 @@ RUN set -ex; \
 	readlink -f "$GHOST_INSTALL/config.development.json"; \
 	\
 # need to save initial content for pre-seeding empty volumes
-	mv "$GHOST_CONTENT" "$GHOST_INSTALL/content.orig"; \
-	mkdir -p "$GHOST_CONTENT"; \
+	# mv "$GHOST_CONTENT" "$GHOST_INSTALL/content.orig"; \
+	# mkdir -p "$GHOST_CONTENT"; \
 	chown node:node "$GHOST_CONTENT"; \
 	\
 # sanity check to ensure knex-migrator was installed
