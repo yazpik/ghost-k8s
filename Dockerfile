@@ -12,16 +12,16 @@ RUN set -x \
 	&& gpg --batch --verify /usr/local/bin/gosu.asc /usr/local/bin/gosu \
 	&& rm -r "$GNUPGHOME" /usr/local/bin/gosu.asc \
 	&& chmod +x /usr/local/bin/gosu \
-	&& gosu nobody true \
-        && mkdir -p /ghost/content
+	&& gosu nobody true
+#        && mkdir -p /ghost/content
 
 ENV NODE_ENV production
 
-ENV GHOST_CLI_VERSION 1.4.1
+ENV GHOST_CLI_VERSION latest
 RUN npm install -g "ghost-cli@$GHOST_CLI_VERSION"
 
 ENV GHOST_INSTALL /var/lib/ghost
-ENV GHOST_CONTENT /ghost/content
+ENV GHOST_CONTENT /var/lib/ghost/content
 
 ENV GHOST_VERSION 1.19.2
 
@@ -41,8 +41,9 @@ RUN set -ex; \
 	readlink -f "$GHOST_INSTALL/config.development.json"; \
 	\
 # need to save initial content for pre-seeding empty volumes
-	# mv "$GHOST_CONTENT" "$GHOST_INSTALL/content.orig"; \
-	# mkdir -p "$GHOST_CONTENT"; \
+# commented out to test on k8s
+	cp -Rf "$GHOST_CONTENT" "$GHOST_INSTALL/content.orig"; \
+	#mkdir -p "$GHOST_CONTENT"; \
 	chown node:node "$GHOST_CONTENT"; \
 	\
 # sanity check to ensure knex-migrator was installed
